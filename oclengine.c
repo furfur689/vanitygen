@@ -2034,8 +2034,8 @@ l_rekey:
 
 	/* Determine rekey interval */
 	EC_GROUP_get_order(pgroup, &vxcp->vxc_bntmp, vxcp->vxc_bnctx);
-	BN_sub(&vxcp->vxc_bntmp2,
-	       &vxcp->vxc_bntmp,
+	BN_sub(vxcp->vxc_bntmp2,
+	       vxcp->vxc_bntmp,
 	       EC_KEY_get0_private_key(pkey));
 	rekey_at = BN_get_word(vxcp->vxc_bntmp2);
 	if ((rekey_at == BN_MASK2) || (rekey_at > rekey_max))
