@@ -42,6 +42,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include <inttypes.h>
+#include <unistd.h>
 
 #include "custom_ec_bn.h"
 #include "sysendian.h"
@@ -893,11 +894,11 @@ main(int argc, char **argv)
 				if (res==33*2){
 					res = EC_POINT_point2oct(EC_KEY_get0_group(pkeyx), pub_basex,
 											 POINT_CONVERSION_COMPRESSED,
-											 vcp->vc_p2shbuf+vcp->vc_multisignhashlen+1, 33, NULL);
+											 (unsigned char *)vcp->vc_p2shbuf+vcp->vc_multisignhashlen+1, 33, NULL);
 				}else{
 					res = EC_POINT_point2oct(EC_KEY_get0_group(pkeyx), pub_basex,
 											 POINT_CONVERSION_UNCOMPRESSED,
-											 vcp->vc_p2shbuf+vcp->vc_multisignhashlen+1, 65, NULL);
+											 (unsigned char *)vcp->vc_p2shbuf+vcp->vc_multisignhashlen+1, 65, NULL);
 				}
 				vcp->vc_p2shbuf[vcp->vc_multisignhashlen++] = res;
 				vcp->vc_multisignhashlen = vcp->vc_multisignhashlen + res;
@@ -979,3 +980,4 @@ main(int argc, char **argv)
 		return 1;
 	return 0;
 }
+
